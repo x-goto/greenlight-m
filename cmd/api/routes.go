@@ -1,9 +1,15 @@
 package main
 
 import (
+	data "goto/greenlight-m/internal/data/user"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+)
+
+var (
+	moderatorAndHigher = []data.Role{data.RoleModerator, data.RoleAdmin}
+	onlyAdmin          = []data.Role{data.RoleAdmin}
 )
 
 func (app *application) routes() *httprouter.Router {

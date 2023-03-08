@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	data "goto/greenlight-m/internal/data/user"
 	"net/http"
 )
 
@@ -24,4 +25,14 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data any, h
 	w.Write(js)
 
 	return nil
+}
+
+func (app *application) isRoleInSet(role data.Role, allowedRoles []data.Role) bool {
+	for _, val := range allowedRoles {
+		if val == role {
+			return true
+		}
+	}
+
+	return false
 }
