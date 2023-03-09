@@ -12,7 +12,7 @@ var (
 	onlyAdmin          = []data.Role{data.RoleAdmin}
 )
 
-func (app *application) routes() *httprouter.Router {
+func (app *application) routes() http.Handler {
 	router := httprouter.New()
 
 	router.HandlerFunc(http.MethodGet, "/v1/healthcheck", app.healthcheckHandler)
@@ -20,5 +20,5 @@ func (app *application) routes() *httprouter.Router {
 	//users
 	router.HandlerFunc(http.MethodPost, "/v1/registration", app.userRegistrationHandler)
 
-	return router
+	return app.recoverPanic(router)
 }
