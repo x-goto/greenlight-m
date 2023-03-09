@@ -14,9 +14,10 @@ func (app *application) errorResponse(w http.ResponseWriter, r *http.Request, st
 		"error": message,
 	}
 
-	if err := app.writeJSON(w, status, env, nil); err != nil {
+	err := app.writeJSON(w, status, env, nil)
+	if err != nil {
 		app.logError(r, err)
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
 
@@ -24,6 +25,10 @@ func (app *application) internalServerErrorResponse(w http.ResponseWriter, r *ht
 	app.logError(r, err)
 	message := "server is unable to process your request due to problems"
 	app.errorResponse(w, r, http.StatusInternalServerError, message)
+}
+
+func (app *application) validationFailedResponse(w http.ResponseWriter, r *http.Request, errors map[string]string) {
+	app.errorResponse(w, r, http.StatusUnprocessableEntity, errors)
 }
 
 func (app *application) badRequestResponse(w http.ResponseWriter, r *http.Request, err error) {
