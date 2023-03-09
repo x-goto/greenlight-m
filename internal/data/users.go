@@ -1,5 +1,7 @@
 package data
 
+import "database/sql"
+
 type password []byte
 
 type Role string
@@ -16,4 +18,8 @@ type User struct {
 	Username string   `json:"username"`
 	Email    string   `json:"email"`
 	Password password `json:"-"`
+}
+
+type UserModel struct {
+	DB *sql.DB
 }

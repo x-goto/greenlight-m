@@ -1,7 +1,7 @@
 package main
 
 import (
-	data "goto/greenlight-m/internal/data/user"
+	"goto/greenlight-m/internal/data"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"

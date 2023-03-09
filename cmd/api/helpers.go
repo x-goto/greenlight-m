@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	data "goto/greenlight-m/internal/data/user"
+	"goto/greenlight-m/internal/data"
 	"net/http"
 )
 
