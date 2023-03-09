@@ -17,5 +17,8 @@ func (app *application) routes() *httprouter.Router {
 
 	router.HandlerFunc(http.MethodGet, "/v1/healthcheck", app.healthcheckHandler)
 
+	//users
+	router.HandlerFunc(http.MethodPost, "/v1/registration", app.userRegistrationHandler)
+
 	return router
 }
