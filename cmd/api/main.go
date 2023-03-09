@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"goto/greenlight-m/internal/data"
-	"goto/greenlight-m/internal/jsonlogger"
+	"goto/greenlight-m/pkg/jsonlogger"
 	"os"
 	"strconv"
 

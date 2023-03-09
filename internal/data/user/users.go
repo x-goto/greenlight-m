@@ -1,6 +1,6 @@
 package data
 
-type password string
+type password []byte
 
 type Role string
 
@@ -12,7 +12,7 @@ const (
 
 type User struct {
 	ID       int      `json:"id"`
-	Role     Role     `json:"role"`
+	Role     Role     `json:"-"`
 	Username string   `json:"username"`
 	Email    string   `json:"email"`
 	Password password `json:"-"`

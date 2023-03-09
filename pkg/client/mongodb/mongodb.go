@@ -35,11 +35,11 @@ func NewClient(ctx context.Context, host, port, username, password, database, au
 
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to connect to mongo.\n ERROR: %v\n,TRACE: %s\n", err, string(debug.Stack()))
+		return nil, fmt.Errorf("failed to connect to mongo ERROR: %v TRACE: %s", err, string(debug.Stack()))
 	}
 
 	if err = client.Ping(ctx, nil); err != nil {
-		return nil, fmt.Errorf("Failed to ping to mongo.\n ERROR: %v\n,TRACE: %s\n", err, string(debug.Stack()))
+		return nil, fmt.Errorf("failed to ping to mongo  ERROR: %v TRACE: %s", err, string(debug.Stack()))
 	}
 
 	return client.Database(database), nil
