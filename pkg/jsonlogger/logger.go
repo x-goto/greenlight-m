@@ -85,6 +85,8 @@ func (l *Logger) print(level Level, message string, properties map[string]string
 		line = []byte(LevelError.String() + " unable to marshal log message " + err.Error())
 	}
 
+	line = append(line, '\n')
+
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	return l.output.Write(line)
