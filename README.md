@@ -1,1 +1,1 @@
-it is modified greenlight from 'Let's Go Further' by Alex Edwards.
+it is web app 'inspired' by `greenlight` from 'Let's Go Further' by Alex Edwards.
