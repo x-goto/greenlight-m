@@ -27,7 +27,7 @@ type config struct {
 type application struct {
 	config config
 	logger *jsonlogger.Logger
-	models data.Models
+	models data.Repositories
 }
 
 func main() {
@@ -66,7 +66,7 @@ func main() {
 	app := &application{
 		config: cfg,
 		logger: logger,
-		models: data.NewModels(db),
+		models: data.NewPQRepositories(db),
 	}
 
 	if err = app.serve(); err != nil {

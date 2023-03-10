@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"goto/greenlight-m/internal/data"
 	"io"
 	"net/http"
 )
@@ -56,14 +55,4 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any
 		}
 	}
 	return nil
-}
-
-func (app *application) isRoleInSet(role data.Role, allowedRoles []data.Role) bool {
-	for _, val := range allowedRoles {
-		if val == role {
-			return true
-		}
-	}
-
-	return false
 }
