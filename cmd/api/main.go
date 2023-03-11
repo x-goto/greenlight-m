@@ -5,7 +5,10 @@ import (
 	"flag"
 	"goto/greenlight-m/internal/data"
 	"goto/greenlight-m/pkg/client/pgsql"
+	"goto/greenlight-m/pkg/httpcodec"
+	"goto/greenlight-m/pkg/httpcodec/json"
 	"goto/greenlight-m/pkg/jsonlogger"
+	"net/http"
 	"os"
 	"strconv"
 	"time"
@@ -27,7 +30,9 @@ type config struct {
 type application struct {
 	config       config
 	logger       *jsonlogger.Logger
+	codec        httpcodec.HTTPCodec
 	repositories data.Repositories
+	server       *http.Server
 }
 
 func main() {
@@ -66,7 +71,9 @@ func main() {
 	app := &application{
 		config:       cfg,
 		logger:       logger,
+		codec:        json.New(),
 		repositories: data.NewPQRepositories(db),
+		//server will be initialized in serve() ***server.go file
 	}
 
 	if err = app.serve(); err != nil {

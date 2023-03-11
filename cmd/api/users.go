@@ -11,7 +11,8 @@ import (
 func (app *application) userRegistrationHandler(w http.ResponseWriter, r *http.Request) {
 	var input dtos.UserRegistrationDTO
 
-	err := app.readJSON(w, r, &input)
+	err := app.readRequest(r, &input)
+
 	if err != nil {
 		app.badRequestResponse(w, r, err)
 		return
@@ -30,13 +31,12 @@ func (app *application) userRegistrationHandler(w http.ResponseWriter, r *http.R
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	err = app.repositories.Users.Create(ctx, &input)
-	if err != nil {
+	if err = app.repositories.Users.Create(ctx, &input); err != nil {
 		app.internalServerErrorResponse(w, r, err)
 		return
 	}
 
-	if err = app.writeJSON(w, http.StatusOK, input, nil); err != nil {
+	if err = app.writeResponse(w, http.StatusOK, input, nil); err != nil {
 		app.internalServerErrorResponse(w, r, err)
 	}
 }

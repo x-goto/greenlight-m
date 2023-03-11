@@ -1,13 +1,16 @@
 package main
 
-import "net/http"
+import (
+	"goto/greenlight-m/pkg/utils"
+	"net/http"
+)
 
 func (app *application) healthcheckHandler(w http.ResponseWriter, r *http.Request) {
-	env := envelope{
+	env := utils.Envelope{
 		"system": "available",
 	}
 
-	err := app.writeJSON(w, http.StatusOK, env, nil)
+	err := app.writeResponse(w, http.StatusOK, env, nil)
 	if err != nil {
 		app.internalServerErrorResponse(w, r, err)
 	}
