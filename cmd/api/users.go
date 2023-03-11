@@ -1,16 +1,15 @@
 package main
 
 import (
+	"context"
+	"goto/greenlight-m/internal/data/dtos"
 	"goto/greenlight-m/pkg/validator"
 	"net/http"
+	"time"
 )
 
 func (app *application) userRegistrationHandler(w http.ResponseWriter, r *http.Request) {
-	var input struct {
-		Username string `json:"username"`
-		Email    string `json:"email"`
-		Password string `json:"password"`
-	}
+	var input dtos.UserRegistrationDTO
 
 	err := app.readJSON(w, r, &input)
 	if err != nil {
@@ -25,6 +24,15 @@ func (app *application) userRegistrationHandler(w http.ResponseWriter, r *http.R
 
 	if !v.Valid() {
 		app.validationFailedResponse(w, r, v.Errors)
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	err = app.repositories.Users.Create(ctx, &input)
+	if err != nil {
+		app.internalServerErrorResponse(w, r, err)
 		return
 	}
 

@@ -1,9 +1,5 @@
 package users
 
-import "database/sql"
-
-type password []byte
-
 type Role string
 
 const (
@@ -13,13 +9,8 @@ const (
 )
 
 type User struct {
-	ID       int      `json:"id"`
-	Role     Role     `json:"-"`
-	Username string   `json:"username"`
-	Email    string   `json:"email"`
-	Password password `json:"-"`
-}
-
-type UserModel struct {
-	DB *sql.DB
+	ID       int    `json:"id"`
+	Role     Role   `json:"-"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
 }

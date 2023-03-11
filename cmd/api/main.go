@@ -25,9 +25,9 @@ type config struct {
 }
 
 type application struct {
-	config config
-	logger *jsonlogger.Logger
-	models data.Repositories
+	config       config
+	logger       *jsonlogger.Logger
+	repositories data.Repositories
 }
 
 func main() {
@@ -64,9 +64,9 @@ func main() {
 	logger.LogInfo("DB connection pool established", nil)
 
 	app := &application{
-		config: cfg,
-		logger: logger,
-		models: data.NewPQRepositories(db),
+		config:       cfg,
+		logger:       logger,
+		repositories: data.NewPQRepositories(db),
 	}
 
 	if err = app.serve(); err != nil {
