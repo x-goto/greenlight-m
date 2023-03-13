@@ -44,7 +44,7 @@ func (app *application) testUserUpdate(w http.ResponseWriter, r *http.Request) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	if err = app.repositories.Users.UpdateUser(ctx, &input); err != nil {
+	if err = app.repositories.Users.Update(ctx, &input); err != nil {
 		app.internalServerErrorResponse(w, r, err)
 		return
 	}

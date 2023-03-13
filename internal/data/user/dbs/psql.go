@@ -33,11 +33,11 @@ func (r *PQUserRepository) Create(ctx context.Context, user *userdto.CreateUserD
 	return nil
 }
 
-func (r *PQUserRepository) UpdateUser(ctx context.Context, user *userdto.UpdateUserDTO) error {
+func (r *PQUserRepository) Update(ctx context.Context, user *userdto.UpdateUserDTO) error {
 	query := `UPDATE users 
 				SET email = $1, username = $2
 				WHERE id = $3
-				RETURNING email`
+				RETURNING email;`
 	return r.DB.QueryRowContext(ctx, query, user.Email, user.Username, user.ID).Scan(&user.Email)
 }
 
@@ -80,5 +80,5 @@ func (r *PQUserRepository) GetByID(ctx context.Context, UserID int) (*userdto.Ge
 		}
 	}
 
-	return &user, err
+	return &user, nil
 }
