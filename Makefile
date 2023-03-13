@@ -1,0 +1,2 @@
+say: 
+	echo "Hello, ${HELLO}!";

@@ -2,12 +2,12 @@ package data
 
 import (
 	"database/sql"
-	"goto/greenlight-m/internal/data/users"
-	"goto/greenlight-m/internal/data/users/dbs"
+	"goto/greenlight-m/internal/data/user"
+	"goto/greenlight-m/internal/data/user/dbs"
 )
 
 type Repositories struct {
-	Users users.Repository
+	Users user.Repository
 }
 
 func NewPQRepositories(db *sql.DB) Repositories {

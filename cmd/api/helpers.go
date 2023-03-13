@@ -1,6 +1,20 @@
 package main
 
-import "net/http"
+import (
+	"errors"
+	"net/http"
+	"strconv"
+
+	"github.com/julienschmidt/httprouter"
+)
+
+func (app *application) readIDParam(r *http.Request) (int, error) {
+	id, err := strconv.Atoi(httprouter.ParamsFromContext(r.Context()).ByName("id"))
+	if err != nil || id < 1 {
+		return 0, errors.New("invalid id param")
+	}
+	return id, nil
+}
 
 func (app *application) readRequest(r *http.Request, dst any) error {
 	return app.codec.Decode(r.Body, dst)

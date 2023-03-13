@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"goto/greenlight-m/internal/data/dtos"
+	userdto "goto/greenlight-m/internal/data/user/userdtos"
 	"goto/greenlight-m/pkg/utils/sqlutils"
 )
 
@@ -12,7 +12,7 @@ type PQUserRepository struct {
 	DB *sql.DB
 }
 
-func (r *PQUserRepository) Create(ctx context.Context, user *dtos.UserRegistrationDTO) error {
+func (r *PQUserRepository) Create(ctx context.Context, user *userdto.CreateUserDTO) error {
 	query := `INSERT INTO users (username, email) 
 				VALUES ($1, $2)
 				RETURNING id;`
@@ -33,10 +33,38 @@ func (r *PQUserRepository) Create(ctx context.Context, user *dtos.UserRegistrati
 	return nil
 }
 
-func (r *PQUserRepository) GetByID(ctx context.Context, UserID int) (*dtos.UserFetchingDTO, error) {
+func (r *PQUserRepository) UpdateUser(ctx context.Context, user *userdto.UpdateUserDTO) error {
+	query := `UPDATE users 
+				SET email = $1, username = $2
+				WHERE id = $3
+				RETURNING email`
+	return r.DB.QueryRowContext(ctx, query, user.Email, user.Username, user.ID).Scan(&user.Email)
+}
+
+func (r *PQUserRepository) DeleteByID(ctx context.Context, UserID int) error {
+	query := `DELETE FROM users WHERE id = $1`
+	result, err := r.DB.ExecContext(ctx, query, UserID)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return sqlutils.ErrRecordNotFound
+	}
+
+	return nil
+}
+
+func (r *PQUserRepository) GetByID(ctx context.Context, UserID int) (*userdto.GetUserDTO, error) {
 	query := `SELECT id, role, username, email FROM users WHERE id = $1`
 
-	var user dtos.UserFetchingDTO
+	var user userdto.GetUserDTO
 	err := r.DB.QueryRowContext(ctx, query, UserID).Scan(
 		&user.ID,
 		&user.Role,

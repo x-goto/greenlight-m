@@ -1,15 +1,15 @@
 package main
 
 import (
-	"goto/greenlight-m/internal/data/users"
+	"goto/greenlight-m/internal/data/user"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 )
 
 var (
-	moderatorAndHigher = []users.Role{users.RoleModerator, users.RoleAdmin}
-	onlyAdmin          = []users.Role{users.RoleAdmin}
+	moderatorAndHigher = []user.Role{user.RoleModerator, user.RoleAdmin}
+	onlyAdmin          = []user.Role{user.RoleAdmin}
 )
 
 func (app *application) routes() http.Handler {
@@ -19,6 +19,9 @@ func (app *application) routes() http.Handler {
 
 	//users
 	router.HandlerFunc(http.MethodPost, "/v1/registration", app.userRegistrationHandler)
+	router.HandlerFunc(http.MethodPut, "/v1/user/update/:id", app.testUserUpdate)
+	router.HandlerFunc(http.MethodDelete, "/v1/user/delete/:id", app.testDeleteUser)
+	router.HandlerFunc(http.MethodGet, "/v1/user/get/:id", app.testGetUser)
 
 	return app.recoverPanic(router)
 }
