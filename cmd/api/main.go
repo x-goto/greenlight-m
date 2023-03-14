@@ -56,6 +56,8 @@ func main() {
 	flag.IntVar(&cfg.db.maxIdleCons, "max-idle-connections", 30, "maximum of allowed idle connections")
 	flag.IntVar(&cfg.db.maxOpenCons, "max-open-connections", 30, "maximum of allowed open connections")
 
+	flag.Parse()
+
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 

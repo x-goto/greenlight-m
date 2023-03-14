@@ -1,6 +1,6 @@
-package userprofiles
+package userprofiledtos
 
-type UserProfile struct {
+type UserProfileDTO struct {
 	UserID       string
 	UserImageUrl string
 	FirstName    string

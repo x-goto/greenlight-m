@@ -1,6 +1,6 @@
 package userdtos
 
-type CreateUserDTO struct {
+type UserCreateDTO struct {
 	ID       int    `json:"-"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
@@ -8,14 +8,14 @@ type CreateUserDTO struct {
 }
 
 // this DTO
-type GetUserDTO struct {
+type UserGetDTO struct {
 	ID       int    `json:"id"`
 	Role     string `json:"-"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
 }
 
-type UpdateUserDTO struct {
+type UserUpdateDTO struct {
 	ID       int    `json:"-"`
 	Email    string `json:"email,omitempty"`
 	Username string `json:"username,omitempty"`

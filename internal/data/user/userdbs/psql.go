@@ -1,4 +1,4 @@
-package dbs
+package userdbs
 
 import (
 	"context"
@@ -12,7 +12,7 @@ type PQUserRepository struct {
 	DB *sql.DB
 }
 
-func (r *PQUserRepository) Create(ctx context.Context, user *userdto.CreateUserDTO) error {
+func (r *PQUserRepository) Create(ctx context.Context, user *userdto.UserCreateDTO) error {
 	query := `INSERT INTO users (username, email) 
 				VALUES ($1, $2)
 				RETURNING id;`
@@ -33,7 +33,7 @@ func (r *PQUserRepository) Create(ctx context.Context, user *userdto.CreateUserD
 	return nil
 }
 
-func (r *PQUserRepository) Update(ctx context.Context, user *userdto.UpdateUserDTO) error {
+func (r *PQUserRepository) Update(ctx context.Context, user *userdto.UserUpdateDTO) error {
 	query := `UPDATE users 
 				SET email = $1, username = $2
 				WHERE id = $3
@@ -61,10 +61,10 @@ func (r *PQUserRepository) DeleteByID(ctx context.Context, UserID int) error {
 	return nil
 }
 
-func (r *PQUserRepository) GetByID(ctx context.Context, UserID int) (*userdto.GetUserDTO, error) {
+func (r *PQUserRepository) GetByID(ctx context.Context, UserID int) (*userdto.UserGetDTO, error) {
 	query := `SELECT id, role, username, email FROM users WHERE id = $1`
 
-	var user userdto.GetUserDTO
+	var user userdto.UserGetDTO
 	err := r.DB.QueryRowContext(ctx, query, UserID).Scan(
 		&user.ID,
 		&user.Role,

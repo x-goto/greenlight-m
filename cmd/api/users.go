@@ -8,7 +8,7 @@ import (
 )
 
 func (app *application) userRegistrationHandler(w http.ResponseWriter, r *http.Request) {
-	var input userdto.CreateUserDTO
+	var input userdto.UserCreateDTO
 
 	err := app.readRequest(r, &input)
 
@@ -37,7 +37,7 @@ func (app *application) testUserUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var input userdto.UpdateUserDTO
+	var input userdto.UserUpdateDTO
 	input.ID = id
 
 	app.readRequest(r, &input)

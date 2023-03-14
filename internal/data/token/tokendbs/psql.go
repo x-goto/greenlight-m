@@ -1,10 +1,10 @@
-package dbs
+package tokendbs
 
 import (
 	"context"
 	"database/sql"
 	"errors"
-	"goto/greenlight-m/internal/data/tokens/tokendtos"
+	"goto/greenlight-m/internal/data/token/tokendtos"
 	"goto/greenlight-m/pkg/utils/sqlutils"
 )
 
